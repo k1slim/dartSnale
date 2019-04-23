@@ -1,0 +1,12 @@
+name: DartSnake
+description: Yet another snake.
+version: 1.0.0
+author: yauheni.hrabun <k1slim@yandex.ru>
+
+environment:
+  sdk: '>=2.1.0 <3.0.0'
+
+dev_dependencies:
+  build_runner: ^1.1.2
+  build_web_compilers: ^1.0.0
+  pedantic: ^1.0.0
