@@ -13,11 +13,43 @@ getCoordinate(coordinate) {
   return coordinate;
 }
 
+getOppositeDirection(Direction direction) {
+  switch (direction) {
+    case Direction.left:
+      return Direction.right;
+    case Direction.right:
+      return Direction.left;
+    case Direction.down:
+      return Direction.up;
+    case Direction.up:
+      return Direction.down;
+  }
+}
+
 class Snake {
   List<Point> _snake = [Point.origin()];
 
   getSnake() {
     return _snake;
+  }
+
+  getSnakeLength() {
+    return _snake.length;
+  }
+
+  _getCorrectedNextHead(Direction direction) {
+    if (_snake.length < 2) {
+      return _getNextHead(direction);
+    }
+
+    Point prevPoint = _snake[1];
+    Point nextHead = _getNextHead(direction);
+
+    if (nextHead == prevPoint) {
+      return _getNextHead(getOppositeDirection(direction));
+    }
+
+    return nextHead;
   }
 
   _getNextHead(Direction direction) {
@@ -45,13 +77,13 @@ class Snake {
   }
 
   move(Direction direction) {
-    Point nextHead = _getNextHead(direction);
+    Point nextHead = _getCorrectedNextHead(direction);
 
     _snake.insert(0, nextHead);
     _snake.removeLast();
   }
 
-  eat(direction) {
+  eat(Direction direction) {
     Point nextHead = _getNextHead(direction);
 
     _snake.insert(0, nextHead);
@@ -64,7 +96,7 @@ class Snake {
   }
 
   checkIntersection() {
-    final head = _snake[0];
+    Point head = _snake[0];
 
     return _snake.skip(1).contains(head);
   }

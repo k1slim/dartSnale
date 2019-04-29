@@ -8,15 +8,17 @@ import 'Food.dart';
 import 'Snake.dart';
 
 drawSnake(Canvas canvas, Snake snake) {
+  canvas.setColor("black");
   snake.getSnake().forEach(
       (part) => canvas.drawPoint(part.x * PART_SIZE, part.y * PART_SIZE));
 }
 
 drawFood(Canvas canvas, Food food) {
+  canvas.setColor("red");
   canvas.drawPoint(food.x * PART_SIZE, food.y * PART_SIZE);
 }
 
-const stepDuration = Duration(milliseconds: 300);
+const stepDuration = Duration(milliseconds: 200);
 
 class Game {
   Snake _snake;
@@ -29,7 +31,7 @@ class Game {
   Game() {
     _snake = Snake();
     _food = Food();
-    _canvas = Canvas('#canvas');
+    _canvas = Canvas('#canvas', '#counter');
 
     _setDirection(Direction.right);
     _setupHandlers();
@@ -56,8 +58,9 @@ class Game {
     }
 
     _canvas.clearAll();
-    drawSnake(_canvas, _snake);
     drawFood(_canvas, _food);
+    drawSnake(_canvas, _snake);
+    _canvas.setCounter(_snake.getSnakeLength().toString());
   }
 
   _startInterval(Function cb) {
